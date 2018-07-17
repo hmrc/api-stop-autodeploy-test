@@ -1,10 +1,7 @@
+# API Stop Auto-deploy Test
 
-# api-stop-autodeploy-test
+Dummy API for testing the stop auto-deploy functionality in the API Platform.
 
- [ ![Download](https://api.bintray.com/packages/hmrc/releases/api-stop-autodeploy-test/images/download.svg) ](https://bintray.com/hmrc/releases/api-stop-autodeploy-test/_latestVersion)
+# License
 
-This is a placeholder README.md for a new repository
-
-### License
-
-This code is open source software licensed under the [Apache 2.0 License]("http://www.apache.org/licenses/LICENSE-2.0.html").
+This code is open source software licensed under the [Apache 2.0 License]("http://www.apache.org/licenses/LICENSE-2.0.html")
