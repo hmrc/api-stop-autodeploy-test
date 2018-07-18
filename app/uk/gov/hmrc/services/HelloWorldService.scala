@@ -49,17 +49,3 @@ object LiveService extends HelloWorldService {
   override def fetchUser(implicit hc: HeaderCarrier): Future[Hello] =
     Future.successful(Hello("Hello User"))
 }
-
-object SandboxService extends HelloWorldService {
-  override def fetchWorld(implicit hc: HeaderCarrier): Future[Hello] =
-    Future.successful(Hello("Hello Sandbox World"))
-
-  override def fetchApplication(implicit hc: HeaderCarrier): Future[Hello] =
-    Future.successful(Hello("Hello Sandbox Application"))
-
-  override def fetchUser(implicit hc: HeaderCarrier): Future[Hello] =
-    Future.successful(Hello("Hello Sandbox User"))
-}
-
-
-

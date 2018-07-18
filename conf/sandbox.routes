@@ -1,3 +1,0 @@
-GET         /sandbox/world                         uk.gov.hmrc.controllers.SandboxController.world
-GET         /sandbox/user                          uk.gov.hmrc.controllers.SandboxController.user
-GET         /sandbox/application                   uk.gov.hmrc.controllers.SandboxController.application

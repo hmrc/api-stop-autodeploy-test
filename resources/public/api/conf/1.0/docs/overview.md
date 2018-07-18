@@ -1,5 +1,4 @@
-This API allows
-It includes resources for testing access to the three different access 
+This API includes resources for testing access to the three different access 
 levels:
 
 -Stop Auto Deploy API to test the checking and approving process

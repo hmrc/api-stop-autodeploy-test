@@ -21,7 +21,7 @@ import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, Result}
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.microservice.controller.BaseController
-import uk.gov.hmrc.services.{Hello, HelloWorldService, LiveService, SandboxService}
+import uk.gov.hmrc.services.{Hello, HelloWorldService, LiveService}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -52,11 +52,6 @@ trait HelloWorld extends BaseController with HeaderValidator {
     case _ => Status(ErrorInternalServerError.httpStatusCode)(Json.toJson(ErrorInternalServerError))
   }
 
-}
-
-object SandboxController extends HelloWorld {
-  override val service = SandboxService
-  override implicit val hc: HeaderCarrier = HeaderCarrier()
 }
 
 object LiveController extends HelloWorld {
