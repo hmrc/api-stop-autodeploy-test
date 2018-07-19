@@ -17,9 +17,9 @@
 package uk.gov.hmrc.services
 
 import play.api.libs.json.Json
-import uk.gov.hmrc.play.http.HeaderCarrier
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 
 case class Hello(message: String)

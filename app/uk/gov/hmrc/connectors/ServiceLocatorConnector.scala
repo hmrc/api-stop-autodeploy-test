@@ -21,10 +21,10 @@ import play.api.http.ContentTypes.JSON
 import play.api.http.HeaderNames.CONTENT_TYPE
 import uk.gov.hmrc.config.{AppContext, WSHttp}
 import uk.gov.hmrc.domain.Registration
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpPost}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.hmrc.http.{ HeaderCarrier, HttpPost }
 
 trait ServiceLocatorConnector {
   val appName: String

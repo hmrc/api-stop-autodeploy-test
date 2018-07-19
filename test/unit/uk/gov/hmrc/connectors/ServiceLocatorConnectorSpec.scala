@@ -21,19 +21,20 @@ import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.mock.MockitoSugar
 import uk.gov.hmrc.connectors.ServiceLocatorConnector
 import uk.gov.hmrc.domain.Registration
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpPost, HttpResponse}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpPost, HttpResponse}
 import uk.gov.hmrc.play.test.UnitSpec
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class ServiceLocatorConnectorSpec extends UnitSpec with MockitoSugar with ScalaFutures {
 
   trait Setup {
-    implicit val hc = HeaderCarrier()
+    implicit val hc: HeaderCarrier = HeaderCarrier()
     val serviceLocatorException = new RuntimeException
 
-    val connector = new ServiceLocatorConnector {
-      override val http = mock[HttpPost]
+    val connector: ServiceLocatorConnector = new ServiceLocatorConnector {
+      override val http: HttpPost = mock[HttpPost]
       override val appUrl: String = "http://api-microservice.example.com"
       override val appName: String = "api-microservice"
       override val serviceUrl: String = "https://SERVICE_LOCATOR"
