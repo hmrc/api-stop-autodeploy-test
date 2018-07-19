@@ -18,24 +18,24 @@ package unit.uk.gov.hmrc.config
 
 import org.mockito.Matchers._
 import org.mockito.Mockito._
-import org.scalatest.mock.MockitoSugar
-import org.scalatestplus.play.OneAppPerSuite
+import org.scalatest.mockito.MockitoSugar
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
 import uk.gov.hmrc.config.ServiceLocatorRegistration
 import uk.gov.hmrc.connectors.ServiceLocatorConnector
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.UnitSpec
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
-class RegisterInServiceLocatorSpec extends UnitSpec with MockitoSugar with OneAppPerSuite {
+class RegisterInServiceLocatorSpec extends UnitSpec with MockitoSugar with GuiceOneAppPerSuite {
 
   override implicit lazy val app: Application = new GuiceApplicationBuilder().build()
 
   trait Setup extends ServiceLocatorRegistration {
-    val mockConnector = mock[ServiceLocatorConnector]
-    override val slConnector = mockConnector
+    val mockConnector: ServiceLocatorConnector = mock[ServiceLocatorConnector]
+    override val slConnector: ServiceLocatorConnector = mockConnector
     override implicit val hc: HeaderCarrier = HeaderCarrier()
   }
 

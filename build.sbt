@@ -3,10 +3,9 @@ import _root_.play.sbt.PlayImport._
 import play.routes.compiler.StaticRoutesGenerator
 import play.sbt.routes.RoutesKeys.routesGenerator
 import sbt.Keys._
-import sbt.Tests.{Group, SubProcess}
-import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin._
 import sbt._
 import uk.gov.hmrc.DefaultBuildSettings._
+import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin._
 
 lazy val appName = "api-stop-autodeploy-test"
 
@@ -48,31 +47,23 @@ lazy val appDependencies: Seq[ModuleID] = compile ++ test
 
 lazy val compile = Seq(
   ws,
-  "uk.gov.hmrc" %% "microservice-bootstrap" % "5.14.0",
-  "uk.gov.hmrc" %% "play-health" % "2.1.0",
-  "uk.gov.hmrc" %% "play-config" % "4.3.0",
-  "uk.gov.hmrc" %% "logback-json-logger" % "3.1.0"
+  "uk.gov.hmrc" %% "microservice-bootstrap" % "6.18.0"
 )
 
 lazy val test = Seq(
-  "uk.gov.hmrc" %% "hmrctest" % "2.4.0" % "test",
-  "org.scalaj" %% "scalaj-http" % "1.1.6" % "test",
+  "uk.gov.hmrc" %% "hmrctest" % "3.0.0" % "test",
+  "org.scalaj" %% "scalaj-http" % "2.4.0" % "test",
   "org.scalatest" %% "scalatest" % "2.2.6" % "test",
   "org.pegdown" % "pegdown" % "1.6.0" % "test",
   "com.typesafe.play" %% "play-test" % PlayVersion.current % "test",
   "com.github.tomakehurst" % "wiremock" % "1.58" % "test",
-  "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % "test",
+  "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.1" % "test",
   "org.mockito" % "mockito-core" % "1.10.19" % "test",
   "info.cukes" %% "cucumber-scala" % "1.2.5" % "test",
   "info.cukes" % "cucumber-junit" % "1.2.5" % "test"
 )
 
 def unitFilter(name: String): Boolean = name startsWith "unit"
-
-def oneForkedJvmPerTest(tests: Seq[TestDefinition]) =
-  tests map {
-    test => Group(test.name, Seq(test), SubProcess(ForkOptions(runJVMOptions = Seq("-Dtest.name=" + test.name))))
-  }
 
 // Coverage configuration
 coverageMinimum := 25

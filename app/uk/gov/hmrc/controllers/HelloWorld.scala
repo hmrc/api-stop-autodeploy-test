@@ -19,12 +19,12 @@ package uk.gov.hmrc.controllers
 import controllers.errorResponseWrites
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, Result}
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.microservice.controller.BaseController
 import uk.gov.hmrc.services.{Hello, HelloWorldService, LiveService}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 trait HelloWorld extends BaseController with HeaderValidator {
 
