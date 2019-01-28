@@ -48,11 +48,11 @@ lazy val appDependencies: Seq[ModuleID] = compile ++ test
 
 lazy val compile = Seq(
   ws,
-  "uk.gov.hmrc" %% "microservice-bootstrap" % "6.18.0"
+  "uk.gov.hmrc" %% "microservice-bootstrap" % "9.1.0"
 )
 
 lazy val test = Seq(
-  "uk.gov.hmrc" %% "hmrctest" % "3.0.0" % "test",
+  "uk.gov.hmrc" %% "hmrctest" % "3.3.0" % "test",
   "org.scalaj" %% "scalaj-http" % "2.4.0" % "test",
   "org.scalatest" %% "scalatest" % "2.2.6" % "test",
   "org.pegdown" % "pegdown" % "1.6.0" % "test",
