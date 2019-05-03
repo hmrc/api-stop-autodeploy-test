@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.config
 
+import akka.actor.ActorSystem
 import com.typesafe.config.Config
 import play.api.{Configuration, Play}
 import play.api.Mode.Mode
@@ -47,6 +48,8 @@ object WSHttp extends WSHttp {
   override protected def runModeConfiguration: Configuration = Play.current.configuration
 
   override protected def appNameConfiguration: Configuration = Play.current.configuration
+
+  override protected def actorSystem: ActorSystem = Play.current.actorSystem
 }
 
 object MicroserviceAuditConnector extends AuditConnector with RunMode {
