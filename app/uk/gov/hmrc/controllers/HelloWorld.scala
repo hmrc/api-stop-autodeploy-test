@@ -17,30 +17,26 @@
 package uk.gov.hmrc.controllers
 
 import controllers.errorResponseWrites
+import javax.inject.{Inject, Singleton}
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, Result}
-import uk.gov.hmrc.play.microservice.controller.BaseController
-import uk.gov.hmrc.services.{Hello, HelloWorldService, LiveService}
+import uk.gov.hmrc.play.bootstrap.controller.BaseController
+import uk.gov.hmrc.services.{Hello, HelloWorldService}
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
-import uk.gov.hmrc.http.HeaderCarrier
+import scala.concurrent.{ExecutionContext, Future}
 
-trait HelloWorld extends BaseController with HeaderValidator {
+@Singleton
+class HelloWorld @Inject()(service: HelloWorldService)(implicit val ec: ExecutionContext) extends BaseController with HeaderValidator {
 
-  val service: HelloWorldService
-
-  implicit val hc: HeaderCarrier
-
-  final def world: Action[AnyContent] = validateAccept(acceptHeaderValidationRules).async {
+  final def world: Action[AnyContent] = validateAccept(acceptHeaderValidationRules).async { implicit request =>
     result(service.fetchWorld)
   }
 
-  final def application: Action[AnyContent] = validateAccept(acceptHeaderValidationRules).async {
+  final def application: Action[AnyContent] = validateAccept(acceptHeaderValidationRules).async { implicit request =>
     result(service.fetchApplication)
   }
 
-  final def user: Action[AnyContent] = validateAccept(acceptHeaderValidationRules).async {
+  final def user: Action[AnyContent] = validateAccept(acceptHeaderValidationRules).async { implicit request =>
     result(service.fetchUser)
   }
 
@@ -52,9 +48,4 @@ trait HelloWorld extends BaseController with HeaderValidator {
     case _ => Status(ErrorInternalServerError.httpStatusCode)(Json.toJson(ErrorInternalServerError))
   }
 
-}
-
-object LiveController extends HelloWorld {
-  override val service = LiveService
-  override implicit val hc: HeaderCarrier = HeaderCarrier()
 }
