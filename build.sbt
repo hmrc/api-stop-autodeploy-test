@@ -1,6 +1,5 @@
 import _root_.play.core.PlayVersion
 import _root_.play.sbt.PlayImport._
-import play.routes.compiler.StaticRoutesGenerator
 import play.sbt.routes.RoutesKeys.routesGenerator
 import sbt.Keys._
 import sbt._
@@ -27,7 +26,7 @@ lazy val microservice = (project in file("."))
       parallelExecution in Test := false,
       fork in Test := false,
       retrieveManaged := true,
-      routesGenerator := StaticRoutesGenerator
+      routesGenerator := InjectedRoutesGenerator
     )
     .settings(testOptions in Test := Seq(Tests.Filter(unitFilter)),
       addTestReportOption(Test, "test-reports")
@@ -48,13 +47,12 @@ lazy val appDependencies: Seq[ModuleID] = compile ++ test
 
 lazy val compile = Seq(
   ws,
-  "uk.gov.hmrc" %% "microservice-bootstrap" % "10.6.0"
+  "uk.gov.hmrc" %% "bootstrap-play-25" % "4.13.0"
 )
 
 lazy val test = Seq(
-  "uk.gov.hmrc" %% "hmrctest" % "3.3.0" % "test",
+  "uk.gov.hmrc" %% "hmrctest" % "3.9.0-play-25" % "test",
   "org.scalaj" %% "scalaj-http" % "2.4.0" % "test",
-  "org.scalatest" %% "scalatest" % "2.2.6" % "test",
   "org.pegdown" % "pegdown" % "1.6.0" % "test",
   "com.typesafe.play" %% "play-test" % PlayVersion.current % "test",
   "com.github.tomakehurst" % "wiremock" % "1.58" % "test",

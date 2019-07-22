@@ -16,36 +16,28 @@
 
 package uk.gov.hmrc.services
 
+import javax.inject.Singleton
 import play.api.libs.json.Json
-
-import scala.concurrent.Future
 import uk.gov.hmrc.http.HeaderCarrier
 
+import scala.concurrent.Future
+
+@Singleton
+class HelloWorldService {
+
+  def fetchWorld(implicit hc: HeaderCarrier): Future[Hello] =
+    Future.successful(Hello("Hello World"))
+
+  def fetchApplication(implicit hc: HeaderCarrier): Future[Hello] =
+    Future.successful(Hello("Hello Application"))
+
+  def fetchUser(implicit hc: HeaderCarrier): Future[Hello] =
+    Future.successful(Hello("Hello User"))
+
+}
 
 case class Hello(message: String)
 
 object Hello {
   implicit val format = Json.format[Hello]
-}
-
-
-trait HelloWorldService {
-
-  def fetchWorld(implicit hc: HeaderCarrier): Future[Hello]
-
-  def fetchUser(implicit hc: HeaderCarrier): Future[Hello]
-
-  def fetchApplication(implicit hc: HeaderCarrier): Future[Hello]
-
-}
-
-object LiveService extends HelloWorldService {
-  override def fetchWorld(implicit hc: HeaderCarrier): Future[Hello] =
-    Future.successful(Hello("Hello World"))
-
-  override def fetchApplication(implicit hc: HeaderCarrier): Future[Hello] =
-    Future.successful(Hello("Hello Application"))
-
-  override def fetchUser(implicit hc: HeaderCarrier): Future[Hello] =
-    Future.successful(Hello("Hello User"))
 }
