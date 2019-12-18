@@ -9,7 +9,7 @@
   "api": {
     "name": "Stop Auto Deploy Test",
     "description": "A 'Stop Auto Deploy QA' Beta of an API BLOCKED 0.8.0 on the HMRC API Developer Hub.",
-    "context": "test/stop-autodeploy",
+    "context": "test",
     "versions": [
       {
         "version": "1.0",
