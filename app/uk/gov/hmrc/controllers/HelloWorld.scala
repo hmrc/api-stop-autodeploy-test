@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +18,19 @@ package uk.gov.hmrc.controllers
 
 import controllers.errorResponseWrites
 import javax.inject.{Inject, Singleton}
+import play.api.http.HttpErrorHandler
 import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, Result}
-import uk.gov.hmrc.play.bootstrap.controller.BaseController
+import play.api.mvc.{Action, AnyContent, ControllerComponents, Result}
+import uk.gov.hmrc.play.bootstrap.controller.{BackendBaseController, BackendController, BaseController}
 import uk.gov.hmrc.services.{Hello, HelloWorldService}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class HelloWorld @Inject()(service: HelloWorldService)(implicit val ec: ExecutionContext) extends BaseController with HeaderValidator {
+class HelloWorld @Inject()(service: HelloWorldService,
+                           httpErrorHandler: HttpErrorHandler,
+                           controllerComponents: ControllerComponents)(implicit val ec: ExecutionContext)
+  extends BackendController(controllerComponents) with HeaderValidator {
 
   final def world: Action[AnyContent] = validateAccept(acceptHeaderValidationRules).async { implicit request =>
     result(service.fetchWorld)
@@ -48,4 +52,5 @@ class HelloWorld @Inject()(service: HelloWorldService)(implicit val ec: Executio
     case _ => Status(ErrorInternalServerError.httpStatusCode)(Json.toJson(ErrorInternalServerError))
   }
 
+  override protected val cc: ControllerComponents = controllerComponents
 }

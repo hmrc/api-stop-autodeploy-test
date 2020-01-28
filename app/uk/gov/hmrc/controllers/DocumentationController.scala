@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,26 +16,26 @@
 
 package uk.gov.hmrc.controllers
 
-import controllers.AssetsBuilder
+import controllers.Assets
 import javax.inject.{Inject, Singleton}
-import play.api.http.{HttpErrorHandler, LazyHttpErrorHandler}
-import play.api.mvc.{Action, AnyContent}
-import uk.gov.hmrc.play.bootstrap.controller.BaseController
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
 
 @Singleton
-class Documentation @Inject()(httpErrorHandler: HttpErrorHandler) extends AssetsBuilder(httpErrorHandler) with BaseController {
+class Documentation @Inject()(assets: Assets, cc: MessagesControllerComponents) extends FrontendBaseController {
 
   def documentation(version: String, endpointName: String): Action[AnyContent] = {
-    super.at(s"/public/api/documentation/$version", s"${endpointName.replaceAll(" ", "-")}.xml")
+    assets.at(s"/public/api/documentation/$version", s"${endpointName.replaceAll(" ", "-")}.xml")
   }
 
   def definition(): Action[AnyContent] = {
-    super.at("/public/api", "definition.json")
+    assets.at("/public/api", "definition.json")
   }
 
   def raml(version: String, file: String): Action[AnyContent] = {
-    super.at(s"/public/api/conf/$version", file)
+    assets.at(s"/public/api/conf/$version", file)
   }
+
+  override protected def controllerComponents: MessagesControllerComponents = cc
 }
 
-object Documentation extends Documentation(LazyHttpErrorHandler)
