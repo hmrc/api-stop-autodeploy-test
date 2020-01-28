@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,12 @@
 package unit.uk.gov.hmrc.controllers
 
 import org.scalatest.Matchers
+import play.api.mvc.ControllerComponents
+import play.api.test.StubControllerComponentsFactory
 import uk.gov.hmrc.controllers.HeaderValidator
 import uk.gov.hmrc.play.test.UnitSpec
 
-class HeaderValidatorSpec extends UnitSpec with Matchers with HeaderValidator{
+class HeaderValidatorSpec extends UnitSpec with Matchers with HeaderValidator with StubControllerComponentsFactory{
 
   "acceptHeaderValidationRules" should {
     "return false when the header value is missing" in {
@@ -57,5 +59,6 @@ class HeaderValidatorSpec extends UnitSpec with Matchers with HeaderValidator{
       acceptHeaderValidationRules(Some("application/vnd.hmrc.notvalid+json")) shouldBe false
     }
   }
+  override protected val cc: ControllerComponents = stubControllerComponents()
 }
 

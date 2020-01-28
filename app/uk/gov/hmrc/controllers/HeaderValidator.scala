@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,18 @@
 package uk.gov.hmrc.controllers
 
 import controllers.errorResponseWrites
-import play.api.libs.json.Json
-import play.api.mvc.{ActionBuilder, Request, Result, Results}
 import play.api.http.HeaderNames.ACCEPT
+import play.api.libs.json.Json
+import play.api.mvc._
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.matching.Regex
 import scala.util.matching.Regex.Match
 
+
 trait HeaderValidator extends Results {
+
+  protected val cc: ControllerComponents
 
   val validateVersion: String => Boolean = str => str == "1.0" || str == "2.0"
 
@@ -37,11 +40,14 @@ trait HeaderValidator extends Results {
     _ flatMap (a => matchHeader(a) map (res => validateContentType(res.group("contenttype")) && validateVersion(res.group("version")))) getOrElse false
 
 
-  def validateAccept(rules: Option[String] => Boolean): ActionBuilder[Request] = new ActionBuilder[Request] {
+  def validateAccept(rules: Option[String] => Boolean): ActionBuilder[Request, AnyContent] = new ActionBuilder[Request, AnyContent] {
     def invokeBlock[A](request: Request[A], block: Request[A] => Future[Result]): Future[Result] = {
       if (rules(request.headers.get(ACCEPT))) block(request)
       else Future.successful(Status(ErrorAcceptHeaderInvalid.httpStatusCode)(Json.toJson(ErrorAcceptHeaderInvalid)))
     }
+
+    override protected def executionContext: ExecutionContext = cc.executionContext
+    override def parser: BodyParser[AnyContent] = cc.parsers.defaultBodyParser
   }
 
 }

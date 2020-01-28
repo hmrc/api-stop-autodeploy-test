@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,11 @@ import org.mockito.Matchers.any
 import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play.OneAppPerSuite
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import play.api.http.HttpErrorHandler
 import play.api.http.Status.{INTERNAL_SERVER_ERROR, NOT_ACCEPTABLE, OK}
 import play.api.mvc.Result
-import play.api.test.FakeRequest
+import play.api.test.{FakeRequest, StubControllerComponentsFactory}
 import uk.gov.hmrc.controllers.HelloWorld
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.test.UnitSpec
@@ -32,14 +34,15 @@ import uk.gov.hmrc.services.{Hello, HelloWorldService}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future.{failed, successful}
 
-class HelloWorldSpec extends UnitSpec with MockitoSugar with OneAppPerSuite {
+class HelloWorldSpec extends UnitSpec with MockitoSugar with GuiceOneAppPerSuite with StubControllerComponentsFactory {
 
   trait Setup {
     implicit val mat: Materializer = app.materializer
     val validRequest = FakeRequest().withHeaders("Accept" -> "application/vnd.hmrc.1.0+json")
     val invalidRequest = FakeRequest()
     val mockHelloWorldService: HelloWorldService = mock[HelloWorldService]
-    val underTest = new HelloWorld(mockHelloWorldService)
+    val httpErrorHandler =  mock[HttpErrorHandler]
+    val underTest = new HelloWorld(mockHelloWorldService, httpErrorHandler, stubControllerComponents())
   }
 
   "world" should {
