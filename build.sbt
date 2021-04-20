@@ -21,7 +21,7 @@ lazy val microservice = (project in file("."))
       name := appName,
       majorVersion := 1,
       targetJvm := "jvm-1.8",
-      scalaVersion := "2.11.11",
+      scalaVersion := "2.12.12",
       libraryDependencies ++= appDependencies,
       parallelExecution in Test := false,
       fork in Test := false,
@@ -35,16 +35,13 @@ lazy val microservice = (project in file("."))
       unmanagedResourceDirectories in Compile += baseDirectory.value / "resources"
     )
     .disablePlugins(sbt.plugins.JUnitXmlReportPlugin)
-    .settings(
-      resolvers += Resolver.bintrayRepo("hmrc", "releases"),
-      resolvers += Resolver.jcenterRepo)
-    .settings(ivyScala := ivyScala.value map {
-      _.copy(overrideScalaVersion = true)
-    })
+    // .settings(ivyScala := ivyScala.value map {
+    //   _.copy(overrideScalaVersion = true)
+    // })
 
 lazy val appDependencies: Seq[ModuleID] = compile ++ test
 
-lazy val hmrcBootstrapPlay26Version = "1.3.0"
+lazy val hmrcBootstrapPlay26Version = "1.4.0"
 lazy val hmrcTestVersion = "3.9.0-play-26"
 lazy val scalaJVersion = "2.4.1"
 lazy val scalatestPlusPlayVersion = "3.1.2"
@@ -59,7 +56,7 @@ lazy val compile = Seq(
 
 lazy val test = Seq(
   "org.pegdown" % "pegdown" % "1.6.0" % "test",
-  "org.webjars" %% "webjars-play" % "2.6.3",
+  "org.webjars" %% "webjars-play" % "2.6.3" % "test", 
   "uk.gov.hmrc" %% "hmrctest" % hmrcTestVersion % "test",
   "org.scalaj" %% "scalaj-http" % scalaJVersion % "test",
   "org.scalatestplus.play" %% "scalatestplus-play" % scalatestPlusPlayVersion % "test",
