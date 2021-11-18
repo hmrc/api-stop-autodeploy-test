@@ -16,19 +16,21 @@
 
 package unit.uk.gov.hmrc.controllers
 
-import controllers._
-import org.scalatest.Matchers
-import play.api.libs.json.Json
+import org.mockito.{ArgumentMatchersSugar, MockitoSugar}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import uk.gov.hmrc.controllers.ErrorAcceptHeaderInvalid
-import uk.gov.hmrc.play.test.UnitSpec
 
-class ErrorResponseSpec extends UnitSpec with Matchers {
+class ErrorResponseSpec
+  extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with MockitoSugar with ArgumentMatchersSugar{
 
   "errorResponse" should {
 
-    "be translated to error Json with only the required fields" in {
-      Json.toJson(ErrorAcceptHeaderInvalid).toString() shouldBe
-        """{"code":"ACCEPT_HEADER_INVALID","message":"The accept header is missing or invalid"}"""
+    "look for required fields" in {
+      ErrorAcceptHeaderInvalid.httpStatusCode shouldBe 406
+      ErrorAcceptHeaderInvalid.errorCode shouldBe "ACCEPT_HEADER_INVALID"
+      ErrorAcceptHeaderInvalid.message shouldBe "The accept header is missing or invalid"
     }
 
   }

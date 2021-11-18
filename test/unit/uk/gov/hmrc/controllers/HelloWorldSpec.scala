@@ -17,24 +17,25 @@
 package unit.uk.gov.hmrc.controllers
 
 import akka.stream.Materializer
-import org.mockito.Matchers.any
-import org.mockito.Mockito.when
-import org.scalatest.mockito.MockitoSugar
-import org.scalatestplus.play.OneAppPerSuite
+import org.mockito.{ArgumentMatchersSugar, MockitoSugar}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.http.HttpErrorHandler
 import play.api.http.Status.{INTERNAL_SERVER_ERROR, NOT_ACCEPTABLE, OK}
 import play.api.mvc.Result
+import play.api.test.Helpers.{contentAsJson, defaultAwaitTimeout, status}
 import play.api.test.{FakeRequest, StubControllerComponentsFactory}
 import uk.gov.hmrc.controllers.HelloWorld
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.test.UnitSpec
 import uk.gov.hmrc.services.{Hello, HelloWorldService}
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import scala.concurrent.Future.{failed, successful}
 
-class HelloWorldSpec extends UnitSpec with MockitoSugar with GuiceOneAppPerSuite with StubControllerComponentsFactory {
+class HelloWorldSpec
+  extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with MockitoSugar with ArgumentMatchersSugar with StubControllerComponentsFactory {
 
   trait Setup {
     implicit val mat: Materializer = app.materializer
@@ -50,14 +51,14 @@ class HelloWorldSpec extends UnitSpec with MockitoSugar with GuiceOneAppPerSuite
       val expectedMessage = "hello world"
       when(mockHelloWorldService.fetchWorld(any[HeaderCarrier])).thenReturn(successful(Hello(expectedMessage)))
 
-      val result: Result = await(underTest.world(validRequest))
+      val result: Future[Result] = underTest.world(validRequest)
 
-      status(result) shouldEqual OK
-      (jsonBodyOf(result) \ "message").as[String] shouldBe expectedMessage
+      status(result) shouldBe OK
+      (contentAsJson(result) \ "message").as[String] shouldBe expectedMessage
     }
 
     "fail with status 406 when request doesn't have an appropriate header" in new Setup {
-      val result: Result = await(underTest.world(invalidRequest))
+      val result: Future[Result] = underTest.world(invalidRequest)
 
       status(result) shouldEqual NOT_ACCEPTABLE
     }
@@ -65,7 +66,7 @@ class HelloWorldSpec extends UnitSpec with MockitoSugar with GuiceOneAppPerSuite
     "fail with 500 when an unexpected error happens" in new Setup {
       when(mockHelloWorldService.fetchWorld(any[HeaderCarrier])).thenReturn(failed(new RuntimeException("something went wrong")))
 
-      val result: Result = await(underTest.world(validRequest))
+      val result: Future[Result] = underTest.world(validRequest)
 
       status(result) shouldEqual INTERNAL_SERVER_ERROR
     }
@@ -76,14 +77,14 @@ class HelloWorldSpec extends UnitSpec with MockitoSugar with GuiceOneAppPerSuite
       val expectedMessage = "hello application"
       when(mockHelloWorldService.fetchApplication(any[HeaderCarrier])).thenReturn(successful(Hello(expectedMessage)))
 
-      val result: Result = await(underTest.application(validRequest))
+      val result: Future[Result] = underTest.application(validRequest)
 
       status(result) shouldEqual OK
-      (jsonBodyOf(result) \ "message").as[String] shouldBe expectedMessage
+      (contentAsJson(result) \ "message").as[String] shouldBe expectedMessage
     }
 
     "fail with status 406 when request doesn't have an appropriate header" in new Setup {
-      val result: Result = await(underTest.application(invalidRequest))
+      val result: Future[Result] = underTest.application(invalidRequest)
 
       status(result) shouldEqual NOT_ACCEPTABLE
     }
@@ -91,7 +92,7 @@ class HelloWorldSpec extends UnitSpec with MockitoSugar with GuiceOneAppPerSuite
     "fail with 500 when an unexpected error happens" in new Setup {
       when(mockHelloWorldService.fetchApplication(any[HeaderCarrier])).thenReturn(failed(new RuntimeException("something went wrong")))
 
-      val result: Result = await(underTest.application(validRequest))
+      val result: Future[Result] = underTest.application(validRequest)
 
       status(result) shouldEqual INTERNAL_SERVER_ERROR
     }
@@ -102,14 +103,14 @@ class HelloWorldSpec extends UnitSpec with MockitoSugar with GuiceOneAppPerSuite
       val expectedMessage = "hello user"
       when(mockHelloWorldService.fetchUser(any[HeaderCarrier])).thenReturn(successful(Hello(expectedMessage)))
 
-      val result: Result = await(underTest.user(validRequest))
+      val result: Future[Result] = underTest.user(validRequest)
 
       status(result) shouldEqual OK
-      (jsonBodyOf(result) \ "message").as[String] shouldBe expectedMessage
+      (contentAsJson(result) \ "message").as[String] shouldBe expectedMessage
     }
 
     "fail with status 406 when request doesn't have an appropriate header" in new Setup {
-      val result: Result = await(underTest.user(invalidRequest))
+      val result: Future[Result] = underTest.user(invalidRequest)
 
       status(result) shouldEqual NOT_ACCEPTABLE
     }
@@ -117,7 +118,7 @@ class HelloWorldSpec extends UnitSpec with MockitoSugar with GuiceOneAppPerSuite
     "fail with 500 when an unexpected error happens" in new Setup {
       when(mockHelloWorldService.fetchUser(any[HeaderCarrier])).thenReturn(failed(new RuntimeException("something went wrong")))
 
-      val result: Result = await(underTest.user(validRequest))
+      val result: Future[Result] = underTest.user(validRequest)
 
       status(result) shouldEqual INTERNAL_SERVER_ERROR
     }

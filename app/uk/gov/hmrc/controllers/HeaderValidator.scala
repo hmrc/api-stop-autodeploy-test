@@ -16,15 +16,12 @@
 
 package uk.gov.hmrc.controllers
 
-import controllers.errorResponseWrites
 import play.api.http.HeaderNames.ACCEPT
-import play.api.libs.json.Json
 import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.matching.Regex
 import scala.util.matching.Regex.Match
-
 
 trait HeaderValidator extends Results {
 
@@ -43,7 +40,7 @@ trait HeaderValidator extends Results {
   def validateAccept(rules: Option[String] => Boolean): ActionBuilder[Request, AnyContent] = new ActionBuilder[Request, AnyContent] {
     def invokeBlock[A](request: Request[A], block: Request[A] => Future[Result]): Future[Result] = {
       if (rules(request.headers.get(ACCEPT))) block(request)
-      else Future.successful(Status(ErrorAcceptHeaderInvalid.httpStatusCode)(Json.toJson(ErrorAcceptHeaderInvalid)))
+      else Future.successful(Status(ErrorAcceptHeaderInvalid.httpStatusCode))
     }
 
     override protected def executionContext: ExecutionContext = cc.executionContext

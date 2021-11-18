@@ -17,12 +17,13 @@
 package uk.gov.hmrc.controllers
 
 import controllers.Assets
+
 import javax.inject.{Inject, Singleton}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
+import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
 @Singleton
-class Documentation @Inject()(assets: Assets, cc: MessagesControllerComponents) extends FrontendBaseController {
+class Documentation @Inject()(assets: Assets, cc: MessagesControllerComponents) extends BackendController(cc) {
 
   def documentation(version: String, endpointName: String): Action[AnyContent] = {
     assets.at(s"/public/api/documentation/$version", s"${endpointName.replaceAll(" ", "-")}.xml")
@@ -36,6 +37,5 @@ class Documentation @Inject()(assets: Assets, cc: MessagesControllerComponents) 
     assets.at(s"/public/api/conf/$version", file)
   }
 
-  override protected def controllerComponents: MessagesControllerComponents = cc
 }
 
