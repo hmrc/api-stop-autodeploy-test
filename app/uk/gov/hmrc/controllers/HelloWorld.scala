@@ -16,13 +16,16 @@
 
 package uk.gov.hmrc.controllers
 
+import controllers.errorResponseWrites
+
+import javax.inject.{Inject, Singleton}
 import play.api.http.HttpErrorHandler
+import play.api.libs.json.Format.GenericFormat
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, ControllerComponents, Result}
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 import uk.gov.hmrc.services.{Hello, HelloWorldService}
 
-import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
@@ -48,7 +51,7 @@ class HelloWorld @Inject()(service: HelloWorldService,
   }
 
   private def recovery: PartialFunction[Throwable, Result] = {
-    case _ => Status(ErrorInternalServerError.httpStatusCode)
+    case _ => Status(ErrorInternalServerError.httpStatusCode)(Json.toJson(ErrorInternalServerError))
   }
 
   override protected val cc: ControllerComponents = controllerComponents

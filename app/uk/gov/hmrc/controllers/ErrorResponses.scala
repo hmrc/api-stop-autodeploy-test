@@ -16,9 +16,11 @@
 
 package uk.gov.hmrc.controllers
 
+import play.api.libs.json.{JsNumber, JsValue, Json, Writes}
+
 sealed abstract class ErrorResponse(val httpStatusCode: Int,
                                     val errorCode: String,
-                                    val message: String)
+                                    val message: String) extends Serializable
 
 case object ErrorUnauthorized extends ErrorResponse(401, "UNAUTHORIZED", "Bearer token is missing or not authorized")
 
@@ -29,3 +31,22 @@ case object ErrorGenericBadRequest extends ErrorResponse(400, "BAD_REQUEST", "Ba
 case object ErrorAcceptHeaderInvalid extends ErrorResponse(406, "ACCEPT_HEADER_INVALID", "The accept header is missing or invalid")
 
 case object ErrorInternalServerError extends ErrorResponse(500, "INTERNAL_SERVER_ERROR", "Internal server error")
+
+
+
+object ErrorResponse {
+
+
+  implicit val errorAcceptHeaderInvalidFormat = Json.format[ErrorAcceptHeaderInvalid.type]
+  implicit val errorGenericBadRequestFormat = Json.format[ErrorGenericBadRequest.type]
+  implicit val errorInternalServerErrorFormat = Json.format[ErrorInternalServerError.type]
+  implicit val errorNotFoundFormat = Json.format[ErrorNotFound.type]
+  implicit val errorUnauthorizedFormat = Json.format[ErrorUnauthorized.type]
+}
+
+
+// object ErrorAcceptHeaderInvalidWrites extends Writes[ErrorResponse] {
+//  def writes(role: ErrorResponse) = role match {
+//    case ErrorAcceptHeaderInvalid => Json.toJson("Admin")
+//  }
+//}
