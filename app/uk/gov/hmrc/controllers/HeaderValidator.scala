@@ -24,7 +24,8 @@ import play.api.mvc._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.matching.Regex
 import scala.util.matching.Regex.Match
-
+import uk.gov.hmrc.controllers.ErrorResponse
+import uk.gov.hmrc.controllers.ErrorResponse.ErrorAcceptHeaderInvalid
 trait HeaderValidator extends Results {
 
   protected val cc: ControllerComponents

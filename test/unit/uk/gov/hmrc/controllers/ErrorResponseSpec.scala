@@ -20,7 +20,7 @@ import controllers._
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.libs.json.Json
-import uk.gov.hmrc.controllers.ErrorAcceptHeaderInvalid
+import uk.gov.hmrc.controllers.ErrorResponse.ErrorAcceptHeaderInvalid
 
 class ErrorResponseSpec extends AnyWordSpec with Matchers {
 
