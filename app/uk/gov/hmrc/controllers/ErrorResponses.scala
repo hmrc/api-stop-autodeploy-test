@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.controllers
 
-import play.api.libs.json.{JsNumber, JsValue, Json, Writes}
+import play.api.libs.json.{Json, Writes}
 
 sealed abstract class ErrorResponse(val httpStatusCode: Int,
                                     val errorCode: String,
@@ -51,10 +51,3 @@ object ErrorResponse {
     )
   }
 }
-
-
-// object ErrorAcceptHeaderInvalidWrites extends Writes[ErrorResponse] {
-//  def writes(role: ErrorResponse) = role match {
-//    case ErrorAcceptHeaderInvalid => Json.toJson("Admin")
-//  }
-//}

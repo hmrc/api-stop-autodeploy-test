@@ -16,7 +16,6 @@
 
 package unit.uk.gov.hmrc.controllers
 
-import controllers._
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.libs.json.Json
