@@ -16,13 +16,16 @@
 
 package unit.uk.gov.hmrc.controllers
 
-import org.scalatest.Matchers
+import org.mockito.{ArgumentMatchersSugar, MockitoSugar}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.mvc.ControllerComponents
 import play.api.test.StubControllerComponentsFactory
 import uk.gov.hmrc.controllers.HeaderValidator
-import uk.gov.hmrc.play.test.UnitSpec
 
-class HeaderValidatorSpec extends UnitSpec with Matchers with HeaderValidator with StubControllerComponentsFactory{
+class HeaderValidatorSpec
+  extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with MockitoSugar with ArgumentMatchersSugar with HeaderValidator with StubControllerComponentsFactory{
 
   "acceptHeaderValidationRules" should {
     "return false when the header value is missing" in {

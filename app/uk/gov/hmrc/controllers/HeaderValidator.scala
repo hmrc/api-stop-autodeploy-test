@@ -16,16 +16,14 @@
 
 package uk.gov.hmrc.controllers
 
-import controllers.errorResponseWrites
 import play.api.http.HeaderNames.ACCEPT
 import play.api.libs.json.Json
 import play.api.mvc._
+import uk.gov.hmrc.controllers.ErrorResponse.ErrorAcceptHeaderInvalid
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.matching.Regex
 import scala.util.matching.Regex.Match
-
-
 trait HeaderValidator extends Results {
 
   protected val cc: ControllerComponents

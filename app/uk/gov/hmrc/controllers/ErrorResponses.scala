@@ -16,16 +16,38 @@
 
 package uk.gov.hmrc.controllers
 
+import play.api.libs.json.{Json, Writes}
+
 sealed abstract class ErrorResponse(val httpStatusCode: Int,
                                     val errorCode: String,
-                                    val message: String)
+                                    val message: String) extends Serializable
 
-case object ErrorUnauthorized extends ErrorResponse(401, "UNAUTHORIZED", "Bearer token is missing or not authorized")
 
-case object ErrorNotFound extends ErrorResponse(404, "NOT_FOUND", "Resource was not found")
+object ErrorResponse {
 
-case object ErrorGenericBadRequest extends ErrorResponse(400, "BAD_REQUEST", "Bad Request")
+  case object ErrorUnauthorized extends ErrorResponse(401, "UNAUTHORIZED", "Bearer token is missing or not authorized")
 
-case object ErrorAcceptHeaderInvalid extends ErrorResponse(406, "ACCEPT_HEADER_INVALID", "The accept header is missing or invalid")
+  case object ErrorNotFound extends ErrorResponse(404, "NOT_FOUND", "Resource was not found")
 
-case object ErrorInternalServerError extends ErrorResponse(500, "INTERNAL_SERVER_ERROR", "Internal server error")
+  case object ErrorGenericBadRequest extends ErrorResponse(400, "BAD_REQUEST", "Bad Request")
+
+  case object ErrorAcceptHeaderInvalid extends ErrorResponse(406, "ACCEPT_HEADER_INVALID", "The accept header is missing or invalid")
+
+  case object ErrorInternalServerError extends ErrorResponse(500, "INTERNAL_SERVER_ERROR", "Internal server error")
+
+
+
+  implicit val w1: Writes[ErrorAcceptHeaderInvalid.type] = {
+    case d @ _ => Json.obj(
+      "code" -> d.errorCode,
+      "message" -> d.message
+    )
+  }
+
+  implicit val w2: Writes[ErrorInternalServerError.type] = {
+    case d @ _ => Json.obj(
+      "code" -> d.errorCode,
+      "message" -> d.message
+    )
+  }
+}

@@ -16,13 +16,12 @@
 
 package unit.uk.gov.hmrc.controllers
 
-import controllers._
-import org.scalatest.Matchers
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 import play.api.libs.json.Json
-import uk.gov.hmrc.controllers.ErrorAcceptHeaderInvalid
-import uk.gov.hmrc.play.test.UnitSpec
+import uk.gov.hmrc.controllers.ErrorResponse.ErrorAcceptHeaderInvalid
 
-class ErrorResponseSpec extends UnitSpec with Matchers {
+class ErrorResponseSpec extends AnyWordSpec with Matchers {
 
   "errorResponse" should {
 
