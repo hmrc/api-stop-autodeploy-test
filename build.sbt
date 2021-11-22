@@ -62,8 +62,8 @@ lazy val test = Seq(
   "org.scalaj" %% "scalaj-http" % scalaJVersion % "test",
   "org.scalatestplus.play" %% "scalatestplus-play" % scalatestPlusPlayVersion % "test",
   "com.github.tomakehurst" % "wiremock-jre8" % wireMockVersion % "test",
-  "info.cukes" %% "cucumber-scala" % "1.2.6" % "test",
-  "info.cukes" % "cucumber-junit" % "1.2.6" % "test"
+  "info.cukes" %% "cucumber-scala" % "1.2.5" % "test",
+  "info.cukes" % "cucumber-junit" % "1.2.5" % "test"
 )
 
 def unitFilter(name: String): Boolean = name startsWith "unit"
