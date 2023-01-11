@@ -8,6 +8,18 @@ import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin._
 
 lazy val appName = "api-stop-autodeploy-test"
 
+
+ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
+
+inThisBuild(
+  List(
+    scalaVersion := "2.12.12",
+    semanticdbEnabled := true,
+    semanticdbVersion := scalafixSemanticdb.revision
+  )
+)
+
+
 lazy val plugins: Seq[Plugins] = Seq(PlayScala, SbtAutoBuildPlugin, SbtGitVersioning, SbtDistributablesPlugin)
 
 lazy val playSettings: Seq[Setting[_]] = Seq.empty
@@ -20,7 +32,6 @@ lazy val microservice = (project in file("."))
     .settings(
       name := appName,
       majorVersion := 1,
-      targetJvm := "jvm-1.8",
       scalaVersion := "2.12.12",
       libraryDependencies ++= appDependencies,
       Test / parallelExecution := false,
@@ -35,9 +46,7 @@ lazy val microservice = (project in file("."))
       Compile / unmanagedResourceDirectories  += baseDirectory.value / "resources"
     )
     .disablePlugins(sbt.plugins.JUnitXmlReportPlugin)
-    // .settings(ivyScala := ivyScala.value map {
-    //   _.copy(overrideScalaVersion = true)
-    // })
+
 
 lazy val appDependencies: Seq[ModuleID] = compile ++ test
 

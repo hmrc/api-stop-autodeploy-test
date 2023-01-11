@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,22 +16,20 @@
 
 package uk.gov.hmrc.controllers
 
+import javax.inject.{Inject, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
+
 import play.api.http.HttpErrorHandler
 import play.api.libs.json.Format.GenericFormat
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, ControllerComponents, Result}
 import uk.gov.hmrc.controllers.ErrorResponse.ErrorInternalServerError
-import uk.gov.hmrc.play.bootstrap.controller.BackendController
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import uk.gov.hmrc.services.{Hello, HelloWorldService}
 
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
-
 @Singleton
-class HelloWorld @Inject()(service: HelloWorldService,
-                           httpErrorHandler: HttpErrorHandler,
-                           controllerComponents: ControllerComponents)(implicit val ec: ExecutionContext)
-  extends BackendController(controllerComponents) with HeaderValidator {
+class HelloWorld @Inject() (service: HelloWorldService, httpErrorHandler: HttpErrorHandler, controllerComponents: ControllerComponents)(implicit val ec: ExecutionContext)
+    extends BackendController(controllerComponents) with HeaderValidator {
 
   final def world: Action[AnyContent] = validateAccept(acceptHeaderValidationRules).async { implicit request =>
     result(service.fetchWorld)

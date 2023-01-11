@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,13 @@ import org.mockito.{ArgumentMatchersSugar, MockitoSugar}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+
 import play.api.mvc.ControllerComponents
 import play.api.test.StubControllerComponentsFactory
 import uk.gov.hmrc.controllers.HeaderValidator
 
 class HeaderValidatorSpec
-  extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with MockitoSugar with ArgumentMatchersSugar with HeaderValidator with StubControllerComponentsFactory{
+    extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with MockitoSugar with ArgumentMatchersSugar with HeaderValidator with StubControllerComponentsFactory {
 
   "acceptHeaderValidationRules" should {
     "return false when the header value is missing" in {
@@ -64,4 +65,3 @@ class HeaderValidatorSpec
   }
   override protected val cc: ControllerComponents = stubControllerComponents()
 }
-
