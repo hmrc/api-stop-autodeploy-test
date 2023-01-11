@@ -18,10 +18,7 @@ package uk.gov.hmrc.controllers
 
 import play.api.libs.json.{Json, Writes}
 
-sealed abstract class ErrorResponse(val httpStatusCode: Int,
-                                    val errorCode: String,
-                                    val message: String) extends Serializable
-
+sealed abstract class ErrorResponse(val httpStatusCode: Int, val errorCode: String, val message: String) extends Serializable
 
 object ErrorResponse {
 
@@ -35,19 +32,17 @@ object ErrorResponse {
 
   case object ErrorInternalServerError extends ErrorResponse(500, "INTERNAL_SERVER_ERROR", "Internal server error")
 
-
-
   implicit val w1: Writes[ErrorAcceptHeaderInvalid.type] = {
     case d @ _ => Json.obj(
-      "code" -> d.errorCode,
-      "message" -> d.message
-    )
+        "code"    -> d.errorCode,
+        "message" -> d.message
+      )
   }
 
   implicit val w2: Writes[ErrorInternalServerError.type] = {
     case d @ _ => Json.obj(
-      "code" -> d.errorCode,
-      "message" -> d.message
-    )
+        "code"    -> d.errorCode,
+        "message" -> d.message
+      )
   }
 }

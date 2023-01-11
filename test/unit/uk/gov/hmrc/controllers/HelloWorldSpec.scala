@@ -35,15 +35,15 @@ import scala.concurrent.Future
 import scala.concurrent.Future.{failed, successful}
 
 class HelloWorldSpec
-  extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with MockitoSugar with ArgumentMatchersSugar with StubControllerComponentsFactory {
+    extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with MockitoSugar with ArgumentMatchersSugar with StubControllerComponentsFactory {
 
   trait Setup {
-    implicit val mat: Materializer = app.materializer
-    val validRequest = FakeRequest().withHeaders("Accept" -> "application/vnd.hmrc.1.0+json")
-    val invalidRequest = FakeRequest()
+    implicit val mat: Materializer               = app.materializer
+    val validRequest                             = FakeRequest().withHeaders("Accept" -> "application/vnd.hmrc.1.0+json")
+    val invalidRequest                           = FakeRequest()
     val mockHelloWorldService: HelloWorldService = mock[HelloWorldService]
-    val httpErrorHandler =  mock[HttpErrorHandler]
-    val underTest = new HelloWorld(mockHelloWorldService, httpErrorHandler, stubControllerComponents())
+    val httpErrorHandler                         = mock[HttpErrorHandler]
+    val underTest                                = new HelloWorld(mockHelloWorldService, httpErrorHandler, stubControllerComponents())
   }
 
   "world" should {

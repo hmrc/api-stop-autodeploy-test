@@ -25,7 +25,7 @@ import play.api.test.StubControllerComponentsFactory
 import uk.gov.hmrc.controllers.HeaderValidator
 
 class HeaderValidatorSpec
-  extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with MockitoSugar with ArgumentMatchersSugar with HeaderValidator with StubControllerComponentsFactory{
+    extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with MockitoSugar with ArgumentMatchersSugar with HeaderValidator with StubControllerComponentsFactory {
 
   "acceptHeaderValidationRules" should {
     "return false when the header value is missing" in {
@@ -64,4 +64,3 @@ class HeaderValidatorSpec
   }
   override protected val cc: ControllerComponents = stubControllerComponents()
 }
-

@@ -28,10 +28,8 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class HelloWorld @Inject()(service: HelloWorldService,
-                           httpErrorHandler: HttpErrorHandler,
-                           controllerComponents: ControllerComponents)(implicit val ec: ExecutionContext)
-  extends BackendController(controllerComponents) with HeaderValidator {
+class HelloWorld @Inject() (service: HelloWorldService, httpErrorHandler: HttpErrorHandler, controllerComponents: ControllerComponents)(implicit val ec: ExecutionContext)
+    extends BackendController(controllerComponents) with HeaderValidator {
 
   final def world: Action[AnyContent] = validateAccept(acceptHeaderValidationRules).async { implicit request =>
     result(service.fetchWorld)

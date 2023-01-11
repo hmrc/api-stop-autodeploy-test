@@ -23,7 +23,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
 @Singleton
-class Documentation @Inject()(assets: Assets, cc: MessagesControllerComponents) extends BackendController(cc) {
+class Documentation @Inject() (assets: Assets, cc: MessagesControllerComponents) extends BackendController(cc) {
 
   def documentation(version: String, endpointName: String): Action[AnyContent] = {
     assets.at(s"/public/api/documentation/$version", s"${endpointName.replaceAll(" ", "-")}.xml")
@@ -38,4 +38,3 @@ class Documentation @Inject()(assets: Assets, cc: MessagesControllerComponents) 
   }
 
 }
-

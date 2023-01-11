@@ -27,11 +27,11 @@ import uk.gov.hmrc.services.{Hello, HelloWorldService}
 import scala.concurrent.Future
 
 class HelloWorldServiceSpec
-  extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with MockitoSugar with ArgumentMatchersSugar {
+    extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with MockitoSugar with ArgumentMatchersSugar {
 
   trait Setup {
     implicit val hc: HeaderCarrier = HeaderCarrier()
-    val underTest = new HelloWorldService
+    val underTest                  = new HelloWorldService
   }
 
   "fetchWorld" should {
