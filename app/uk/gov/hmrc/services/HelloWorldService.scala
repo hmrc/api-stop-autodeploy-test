@@ -17,10 +17,10 @@
 package uk.gov.hmrc.services
 
 import javax.inject.Singleton
+import scala.concurrent.Future
+
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
-
-import scala.concurrent.Future
 
 @Singleton
 class HelloWorldService {

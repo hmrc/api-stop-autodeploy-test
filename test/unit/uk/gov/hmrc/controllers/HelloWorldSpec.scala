@@ -16,11 +16,16 @@
 
 package unit.uk.gov.hmrc.controllers
 
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import scala.concurrent.Future.{failed, successful}
+
 import akka.stream.Materializer
 import org.mockito.{ArgumentMatchersSugar, MockitoSugar}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+
 import play.api.http.HttpErrorHandler
 import play.api.http.Status.{INTERNAL_SERVER_ERROR, NOT_ACCEPTABLE, OK}
 import play.api.mvc.Result
@@ -29,10 +34,6 @@ import play.api.test.{FakeRequest, StubControllerComponentsFactory}
 import uk.gov.hmrc.controllers.HelloWorld
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.services.{Hello, HelloWorldService}
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
-import scala.concurrent.Future.{failed, successful}
 
 class HelloWorldSpec
     extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with MockitoSugar with ArgumentMatchersSugar with StubControllerComponentsFactory {

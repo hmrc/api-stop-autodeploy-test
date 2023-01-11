@@ -18,6 +18,7 @@ package unit.uk.gov.hmrc.controllers
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+
 import play.api.libs.json.Json
 import uk.gov.hmrc.controllers.ErrorResponse.ErrorAcceptHeaderInvalid
 
