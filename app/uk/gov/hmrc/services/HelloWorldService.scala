@@ -20,18 +20,17 @@ import javax.inject.Singleton
 import scala.concurrent.Future
 
 import play.api.libs.json.Json
-import uk.gov.hmrc.http.HeaderCarrier
 
 @Singleton
 class HelloWorldService {
 
-  def fetchWorld(implicit hc: HeaderCarrier): Future[Hello] =
+  def fetchWorld: Future[Hello] =
     Future.successful(Hello("Hello World"))
 
-  def fetchApplication(implicit hc: HeaderCarrier): Future[Hello] =
+  def fetchApplication: Future[Hello] =
     Future.successful(Hello("Hello Application"))
 
-  def fetchUser(implicit hc: HeaderCarrier): Future[Hello] =
+  def fetchUser: Future[Hello] =
     Future.successful(Hello("Hello User"))
 
 }

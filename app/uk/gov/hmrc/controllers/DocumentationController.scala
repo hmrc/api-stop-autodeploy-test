@@ -21,7 +21,7 @@ import javax.inject.{Inject, Singleton}
 import controllers.Assets
 
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.controller.BackendController
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 @Singleton
 class Documentation @Inject() (assets: Assets, cc: MessagesControllerComponents) extends BackendController(cc) {

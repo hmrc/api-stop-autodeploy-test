@@ -32,7 +32,6 @@ import play.api.mvc.Result
 import play.api.test.Helpers.{contentAsJson, defaultAwaitTimeout, status}
 import play.api.test.{FakeRequest, StubControllerComponentsFactory}
 import uk.gov.hmrc.controllers.HelloWorld
-import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.services.{Hello, HelloWorldService}
 
 class HelloWorldSpec
@@ -50,7 +49,7 @@ class HelloWorldSpec
   "world" should {
     "return message from service" in new Setup {
       val expectedMessage = "hello world"
-      when(mockHelloWorldService.fetchWorld(any[HeaderCarrier])).thenReturn(successful(Hello(expectedMessage)))
+      when(mockHelloWorldService.fetchWorld).thenReturn(successful(Hello(expectedMessage)))
 
       val result: Future[Result] = underTest.world(validRequest)
 
@@ -65,7 +64,7 @@ class HelloWorldSpec
     }
 
     "fail with 500 when an unexpected error happens" in new Setup {
-      when(mockHelloWorldService.fetchWorld(any[HeaderCarrier])).thenReturn(failed(new RuntimeException("something went wrong")))
+      when(mockHelloWorldService.fetchWorld).thenReturn(failed(new RuntimeException("something went wrong")))
 
       val result: Future[Result] = underTest.world(validRequest)
 
@@ -76,7 +75,7 @@ class HelloWorldSpec
   "application" should {
     "return message from service" in new Setup {
       val expectedMessage = "hello application"
-      when(mockHelloWorldService.fetchApplication(any[HeaderCarrier])).thenReturn(successful(Hello(expectedMessage)))
+      when(mockHelloWorldService.fetchApplication).thenReturn(successful(Hello(expectedMessage)))
 
       val result: Future[Result] = underTest.application(validRequest)
 
@@ -91,7 +90,7 @@ class HelloWorldSpec
     }
 
     "fail with 500 when an unexpected error happens" in new Setup {
-      when(mockHelloWorldService.fetchApplication(any[HeaderCarrier])).thenReturn(failed(new RuntimeException("something went wrong")))
+      when(mockHelloWorldService.fetchApplication).thenReturn(failed(new RuntimeException("something went wrong")))
 
       val result: Future[Result] = underTest.application(validRequest)
 
@@ -102,7 +101,7 @@ class HelloWorldSpec
   "user" should {
     "return message from service" in new Setup {
       val expectedMessage = "hello user"
-      when(mockHelloWorldService.fetchUser(any[HeaderCarrier])).thenReturn(successful(Hello(expectedMessage)))
+      when(mockHelloWorldService.fetchUser).thenReturn(successful(Hello(expectedMessage)))
 
       val result: Future[Result] = underTest.user(validRequest)
 
@@ -117,7 +116,7 @@ class HelloWorldSpec
     }
 
     "fail with 500 when an unexpected error happens" in new Setup {
-      when(mockHelloWorldService.fetchUser(any[HeaderCarrier])).thenReturn(failed(new RuntimeException("something went wrong")))
+      when(mockHelloWorldService.fetchUser).thenReturn(failed(new RuntimeException("something went wrong")))
 
       val result: Future[Result] = underTest.user(validRequest)
 
