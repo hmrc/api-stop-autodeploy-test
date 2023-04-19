@@ -8,17 +8,11 @@ import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin._
 
 lazy val appName = "api-stop-autodeploy-test"
 
+scalaVersion := "2.13.8"
 
 ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
-
-inThisBuild(
-  List(
-    scalaVersion := "2.12.12",
-    semanticdbEnabled := true,
-    semanticdbVersion := scalafixSemanticdb.revision
-  )
-)
-
+ThisBuild / semanticdbEnabled := true
+ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
 
 lazy val plugins: Seq[Plugins] = Seq(PlayScala, SbtAutoBuildPlugin, SbtGitVersioning, SbtDistributablesPlugin)
 
@@ -32,7 +26,6 @@ lazy val microservice = (project in file("."))
     .settings(
       name := appName,
       majorVersion := 1,
-      scalaVersion := "2.12.12",
       libraryDependencies ++= appDependencies,
       Test / parallelExecution := false,
       Test / fork:= false,
@@ -45,13 +38,21 @@ lazy val microservice = (project in file("."))
     .settings(
       Compile / unmanagedResourceDirectories  += baseDirectory.value / "resources"
     )
+    .settings(
+      scalacOptions ++= Seq(
+        "-Wconf:cat=unused&src=views/.*\\.scala:s",
+        "-Wconf:cat=unused&src=.*RoutesPrefix\\.scala:s",
+        "-Wconf:cat=unused&src=.*Routes\\.scala:s",
+        "-Wconf:cat=unused&src=.*ReverseRoutes\\.scala:s"
+      )
+    )
     .disablePlugins(sbt.plugins.JUnitXmlReportPlugin)
 
 
 lazy val appDependencies: Seq[ModuleID] = compile ++ test
 
 lazy val hmrcBootstrapPlay28Version = "7.12.0"
-lazy val scalaJVersion = "2.4.1"
+lazy val scalaJVersion = "2.4.2"
 lazy val mockitoVersion = "1.10.19"
 lazy val wireMockVersion = "2.21.0"
 
@@ -68,8 +69,8 @@ lazy val test = Seq(
   "org.mockito" %% "mockito-scala-scalatest" % "1.16.46" % Test,
   "org.scalaj" %% "scalaj-http" % scalaJVersion % "test",
   "com.github.tomakehurst" % "wiremock-jre8" % wireMockVersion % "test",
-  "info.cukes" %% "cucumber-scala" % "1.2.5" % "test",
-  "info.cukes" % "cucumber-junit" % "1.2.5" % "test"
+  "io.cucumber" %% "cucumber-scala" % "5.7.0" % "test",
+  "io.cucumber" % "cucumber-junit" % "5.7.0" % "test"
 )
 
 def unitFilter(name: String): Boolean = name startsWith "unit"
