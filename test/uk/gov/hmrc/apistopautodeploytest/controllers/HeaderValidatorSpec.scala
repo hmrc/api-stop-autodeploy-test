@@ -23,7 +23,8 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
 import play.api.mvc.ControllerComponents
 import play.api.test.StubControllerComponentsFactory
-import uk.gov.hmrc.controllers.HeaderValidator
+
+import uk.gov.hmrc.apistopautodeploytest.controllers.HeaderValidator
 
 class HeaderValidatorSpec
     extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with MockitoSugar with ArgumentMatchersSugar with HeaderValidator with StubControllerComponentsFactory {

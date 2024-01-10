@@ -23,7 +23,8 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
 import play.api.test.Helpers.{await, defaultAwaitTimeout}
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.services.{Hello, HelloWorldService}
+
+import uk.gov.hmrc.apistopautodeploytest.services.{Hello, HelloWorldService}
 
 class HelloWorldServiceSpec
     extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with MockitoSugar with ArgumentMatchersSugar {

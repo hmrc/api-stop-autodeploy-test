@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.controllers
+package uk.gov.hmrc.apistopautodeploytest.controllers
 
 import play.api.http.Status.{BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_ACCEPTABLE, NOT_FOUND, UNAUTHORIZED}
 import play.api.libs.json.{Json, Writes}

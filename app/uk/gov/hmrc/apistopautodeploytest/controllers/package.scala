@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import play.api.libs.json.{JsValue, Json, Writes}
-import uk.gov.hmrc.controllers.ErrorResponse
+package uk.gov.hmrc.apistopautodeploytest
+
+import play.api.libs.json.{Json, Writes}
 
 package object controllers {
 
-  implicit val errorResponseWrites = new Writes[ErrorResponse] {
-    def writes(e: ErrorResponse): JsValue = Json.obj("code" -> e.errorCode, "message" -> e.message)
-  }
+  implicit val errorResponseWrites: Writes[ErrorResponse] = (e: ErrorResponse) =>
+    Json.obj("code" -> e.errorCode, "message" -> e.message)
 
 }

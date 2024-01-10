@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.services
+package uk.gov.hmrc.apistopautodeploytest.services
 
 import javax.inject.Singleton
 import scala.concurrent.Future
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 @Singleton
 class HelloWorldService {
@@ -38,5 +38,5 @@ class HelloWorldService {
 case class Hello(message: String)
 
 object Hello {
-  implicit val format = Json.format[Hello]
+  implicit val format: OFormat[Hello] = Json.format[Hello]
 }
