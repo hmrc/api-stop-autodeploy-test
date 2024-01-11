@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.controllers
+package uk.gov.hmrc.apistopautodeploytest.controllers
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.matching.Regex
@@ -23,7 +23,8 @@ import scala.util.matching.Regex.Match
 import play.api.http.HeaderNames.ACCEPT
 import play.api.libs.json.Json
 import play.api.mvc._
-import uk.gov.hmrc.controllers.ErrorResponse.ErrorAcceptHeaderInvalid
+
+import uk.gov.hmrc.apistopautodeploytest.controllers.ErrorResponse.ErrorAcceptHeaderInvalid
 
 trait HeaderValidator extends Results {
 

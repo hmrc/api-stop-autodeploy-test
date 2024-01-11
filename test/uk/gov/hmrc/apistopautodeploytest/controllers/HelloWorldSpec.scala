@@ -31,8 +31,9 @@ import play.api.http.Status.{INTERNAL_SERVER_ERROR, NOT_ACCEPTABLE, OK}
 import play.api.mvc.Result
 import play.api.test.Helpers.{contentAsJson, defaultAwaitTimeout, status}
 import play.api.test.{FakeRequest, StubControllerComponentsFactory}
-import uk.gov.hmrc.controllers.HelloWorld
-import uk.gov.hmrc.services.{Hello, HelloWorldService}
+
+import uk.gov.hmrc.apistopautodeploytest.controllers.HelloWorld
+import uk.gov.hmrc.apistopautodeploytest.services.{Hello, HelloWorldService}
 
 class HelloWorldSpec
     extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with MockitoSugar with ArgumentMatchersSugar with StubControllerComponentsFactory {

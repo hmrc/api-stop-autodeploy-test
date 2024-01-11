@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.controllers
+package uk.gov.hmrc.apistopautodeploytest.controllers
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -23,9 +23,10 @@ import play.api.http.HttpErrorHandler
 import play.api.libs.json.Format.GenericFormat
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, ControllerComponents, Result}
-import uk.gov.hmrc.controllers.ErrorResponse.ErrorInternalServerError
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-import uk.gov.hmrc.services.{Hello, HelloWorldService}
+
+import uk.gov.hmrc.apistopautodeploytest.controllers.ErrorResponse.ErrorInternalServerError
+import uk.gov.hmrc.apistopautodeploytest.services.{Hello, HelloWorldService}
 
 @Singleton
 class HelloWorld @Inject() (service: HelloWorldService, httpErrorHandler: HttpErrorHandler, controllerComponents: ControllerComponents)(implicit val ec: ExecutionContext)
