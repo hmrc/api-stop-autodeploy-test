@@ -32,15 +32,15 @@ import uk.gov.hmrc.apistopautodeploytest.services.{Hello, HelloWorldService}
 class HelloWorld @Inject() (service: HelloWorldService, httpErrorHandler: HttpErrorHandler, controllerComponents: ControllerComponents)(implicit val ec: ExecutionContext)
     extends BackendController(controllerComponents) with HeaderValidator {
 
-  final def world: Action[AnyContent] = validateAccept(acceptHeaderValidationRules).async { implicit request =>
+  final def world: Action[AnyContent] = validateAccept(acceptHeaderValidationRules).async { _ =>
     result(service.fetchWorld)
   }
 
-  final def application: Action[AnyContent] = validateAccept(acceptHeaderValidationRules).async { implicit request =>
+  final def application: Action[AnyContent] = validateAccept(acceptHeaderValidationRules).async { _ =>
     result(service.fetchApplication)
   }
 
-  final def user: Action[AnyContent] = validateAccept(acceptHeaderValidationRules).async { implicit request =>
+  final def user: Action[AnyContent] = validateAccept(acceptHeaderValidationRules).async { _ =>
     result(service.fetchUser)
   }
 
