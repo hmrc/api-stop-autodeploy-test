@@ -19,6 +19,11 @@
         "version": "2.0",
         "status": "STABLE",
         "endpointsEnabled": true
+      },
+      {
+        "version": "3.0",
+        "status": "STABLE",
+        "endpointsEnabled": true
       }
     ]
   }
