@@ -34,7 +34,7 @@ class Documentation @Inject() (assets: Assets, cc: MessagesControllerComponents)
     assets.at("/public/api", "definition.json")
   }
 
-  def raml(version: String, file: String): Action[AnyContent] = {
+  def asset(version: String, file: String): Action[AnyContent] = {
     assets.at(s"/public/api/conf/$version", file)
   }
 
