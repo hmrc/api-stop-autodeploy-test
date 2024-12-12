@@ -1,0 +1,153 @@
+openapi: "3.0.3"
+
+info:
+  version: 4.0.0
+  title: Stop AutoDeploy API
+  description: |
+    Dummy API for testing the stop auto-deploy functionality in the API Platform
+  
+servers:
+- url: https://test-api.service.hmrc.gov.uk
+  description: Sandbox
+- url: https://api.service.hmrc.gov.uk/
+  description: Production
+
+components:
+  responses:
+    badOrExpiredTokenResponse:
+      description: |
+        Bad or expired token.
+        This can happen if the user or HMRC revoked or expired an access token.
+        To fix, you should re-authenticate the user.
+      content:
+        application/json:
+          example:
+    forbiddenResponse:
+      description: |
+        Bad OAuth request (wrong consumer key, bad nonce, expired
+        timestamp...). Unfortunately, re-authenticating the user won't help here.
+      content:
+        application/json:
+          example:
+  parameters:
+    acceptHeader:
+      name: Accept
+      in: header
+      schema:
+        type: string
+        enum: [
+          "application/vnd.hmrc.1.0+json",
+          "application/vnd.hmrc.1.0+xml"
+        ]
+      required: true
+  securitySchemes:
+    userRestricted:
+      type: oauth2
+      description: |
+        HMRC supports OAuth 2.0 for authenticating user restricted API requests using an OAuth 2.0 Bearer Token in the AUTHORIZATION header.
+        See https://developer.service.hmrc.gov.uk/api-documentation/docs/authorisation/user-restricted-endpoints for details.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.service.hmrc.gov.uk/oauth/authorize
+          tokenUrl: https://api.service.hmrc.gov.uk/oauth/token
+          refreshUrl: https://api.service.hmrc.gov.uk/oauth/refresh
+          scopes:
+            stop-autodeploy: access stop autodeploy
+    applicationRestricted:
+      type: oauth2
+      description: |
+        HMRC supports OAuth 2.0 for authenticating application restricted API requests using an OAuth 2.0 Bearer Token in the AUTHORIZATION header.
+        See https://developer.service.hmrc.gov.uk/api-documentation/docs/authorisation/application-restricted-endpoints for details.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.service.hmrc.gov.uk/oauth/token
+          scopes: {}
+paths:
+  /test/stop-autodeploy/world:
+    get:
+      summary: Stop Auto Deployment
+      description: |
+        A simple example for integrating with an unrestricted service.
+
+        Any request to this endpoint initiates a 'Hello World' response.
+      tags:
+      - api-stop-autodeploy-test
+      parameters:
+      - $ref: '#/components/parameters/acceptHeader'
+      responses:
+        200:
+          description: "OK Response"
+          content:
+            application/json:
+              example: 
+                {
+                  "message" : "Hello World"
+                }
+      security:
+      - {}
+                
+  /test/stop-autodeploy/user:
+    get:
+      summary: Say hello user
+      description: |
+        A simple example for integrating with a user-restricted service, using an OAuth 2.0 `access_token`.
+
+        Any authorised request to this endpoint initiates a 'Hello User' response.
+      tags:
+      - api-stop-autodeploy-test
+      parameters:
+      - $ref: '#/components/parameters/acceptHeader'
+      responses:
+        200:
+          description: "OK Response"
+          content:
+            application/json:
+              example: 
+                {
+                  "message" : "Hello User"
+                }
+        401:
+          description: "UNAUTHORISED Response"
+          content:
+            application/json:
+              example: 
+                {
+                  "code": "MISSING_CREDENTIALS",
+                  "message": "Authentication information is not provided"
+                }
+      security:
+      - userRestricted:
+        - stop-autodeploy
+        
+  /test/stop-autodeploy/application:
+    get:
+      summary: Say hello application
+      description: | 
+        A simple example for integrating with an application-restricted service, using an OAuth 2.0 `access_token`.
+
+        Any authorised request to this endpoint initiates a 'Hello Application' response.
+
+      tags:
+      - api-stop-autodeploy-test
+      parameters:
+      - $ref: '#/components/parameters/acceptHeader'
+      responses:
+        200:
+          description: "OK Response"
+          content:
+            application/json:
+              example: 
+                {
+                  "message" : "Hello Application"
+                }
+        401:
+          description: "UNAUTHORISED Response"
+          content:
+            application/json:
+              example: 
+                {
+                  "code": "MISSING_CREDENTIALS",
+                  "message": "Authentication information is not provided"
+                }
+      security:
+      - applicationRestricted: []
