@@ -22,7 +22,7 @@
       },
       {
         "version": "4.0",
-        "status": "STABLE",
+        "status": "RETIRED",
         "endpointsEnabled": true
       }
     ]
