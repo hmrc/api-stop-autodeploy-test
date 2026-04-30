@@ -1,6 +1,6 @@
 lazy val appName = "api-stop-autodeploy-test"
 
-ThisBuild / scalaVersion := "2.13.12"
+ThisBuild / scalaVersion := "2.13.18"
 ThisBuild / majorVersion := 1
 
 ThisBuild / libraryDependencySchemes += "org.scala-lang.modules" %% "scala-xml" % VersionScheme.Always
